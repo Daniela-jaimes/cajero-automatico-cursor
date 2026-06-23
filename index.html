@@ -3,172 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cajero Automático</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <title>ATM — Cajero Automático</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <main class="card">
-      <!-- Vista Login -->
-      <section id="view-login" class="view active">
-        <div class="login-hero">
-          <div class="logo-circle">
-            <i class="fa-solid fa-building-columns"></i>
+  <main class="app">
+    <!-- Login -->
+    <section id="login-view" class="view active" aria-label="Inicio de sesión">
+      <div class="card">
+        <div class="card-header">
+          <span class="logo" aria-hidden="true">🏦</span>
+          <h1>ATM Bank</h1>
+          <p class="subtitle">Ingresa a tu cuenta</p>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="login-username">Usuario</label>
+            <input
+              type="text"
+              id="login-username"
+              name="username"
+              placeholder="Ej: ana"
+              autocomplete="username"
+              required
+            >
           </div>
-          <h1 class="brand-title">Cajero Automático</h1>
-          <p class="brand-subtitle">Tu banca digital segura</p>
-        </div>
-
-        <div class="panel-card login-panel">
-          <h2>Ingresar al sistema</h2>
-          <form id="login-form">
-            <div class="input-group">
-              <label for="username">Usuario</label>
-              <div class="input-wrapper">
-                <i class="fa-solid fa-user input-icon"></i>
-                <input type="text" id="username" name="username" autocomplete="username" placeholder="Ingrese su usuario" required>
-              </div>
-            </div>
-
-            <div class="input-group">
-              <label for="pin">PIN</label>
-              <div class="input-wrapper">
-                <i class="fa-solid fa-lock input-icon"></i>
-                <input type="password" id="pin" name="pin" autocomplete="current-password" maxlength="4" placeholder="Ingrese su PIN" required>
-              </div>
-            </div>
-
-            <p id="login-error" class="message error hidden"></p>
-            <button type="submit" class="btn btn-primary">
-              <span>Ingresar</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-          </form>
-        </div>
-      </section>
-
-      <!-- Vista Menú -->
-      <section id="view-menu" class="view hidden">
-        <div class="dashboard-header">
-          <div class="welcome-block">
-            <p class="welcome-label">Bienvenido</p>
-            <p class="greeting"><span id="user-name"></span></p>
+          <div class="field">
+            <label for="login-password">Contraseña</label>
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              placeholder="Tu contraseña"
+              autocomplete="current-password"
+              required
+            >
           </div>
-          <div class="header-badge">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
+          <p id="login-message" class="message" role="alert" hidden></p>
+          <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard-view" class="view" aria-label="Panel principal" hidden>
+      <div class="card">
+        <div class="card-header">
+          <span class="logo" aria-hidden="true">🏦</span>
+          <h1 id="welcome-text">Hola, usuario</h1>
+          <p class="subtitle">Tu saldo disponible</p>
         </div>
 
-        <h2 class="section-title">Menú principal</h2>
-
-        <div class="menu-actions">
-          <button type="button" id="btn-balance" class="menu-card menu-card--balance">
-            <span class="menu-card-icon">
-              <i class="fa-solid fa-wallet"></i>
-            </span>
-            <span class="menu-card-content">
-              <span class="menu-card-title">Consultar saldo</span>
-              <span class="menu-card-desc">Ver tu saldo disponible</span>
-            </span>
-            <i class="fa-solid fa-chevron-right menu-card-arrow"></i>
-          </button>
-
-          <button type="button" id="btn-transfer" class="menu-card menu-card--transfer">
-            <span class="menu-card-icon">
-              <i class="fa-solid fa-paper-plane"></i>
-            </span>
-            <span class="menu-card-content">
-              <span class="menu-card-title">Transferir</span>
-              <span class="menu-card-desc">Enviar dinero a otra cuenta</span>
-            </span>
-            <i class="fa-solid fa-chevron-right menu-card-arrow"></i>
-          </button>
-
-          <button type="button" id="btn-logout" class="menu-card menu-card--logout">
-            <span class="menu-card-icon">
-              <i class="fa-solid fa-right-from-bracket"></i>
-            </span>
-            <span class="menu-card-content">
-              <span class="menu-card-title">Cerrar sesión</span>
-              <span class="menu-card-desc">Salir de tu cuenta</span>
-            </span>
-            <i class="fa-solid fa-chevron-right menu-card-arrow"></i>
-          </button>
+        <div class="balance-panel">
+          <p class="balance-label">Saldo actual</p>
+          <p id="balance-display" class="balance-amount">$0.00</p>
         </div>
-      </section>
 
-      <!-- Vista Saldo -->
-      <section id="view-balance" class="view hidden">
-        <div class="balance-screen">
-          <div class="balance-display">
-            <div class="balance-icon-wrap">
-              <i class="fa-solid fa-wallet"></i>
-            </div>
-            <p class="balance-label">Saldo Disponible</p>
-            <p id="balance-amount" class="balance-amount">S/ 0.00</p>
-          </div>
-
-          <button type="button" id="btn-back-from-balance" class="btn btn-outline btn-back-balance">
-            <i class="fa-solid fa-arrow-left"></i>
-            <span>Volver</span>
-          </button>
+        <div class="actions">
+          <button type="button" id="btn-transfer" class="btn btn-primary">Transferir</button>
+          <button type="button" id="btn-logout" class="btn btn-secondary">Cerrar sesión</button>
+          <button type="button" id="btn-reset-demo" class="btn btn-ghost">Restaurar datos de demo</button>
         </div>
-      </section>
+      </div>
+    </section>
+  </main>
 
-      <!-- Vista Transferencia -->
-      <section id="view-transfer" class="view hidden">
-        <h2 class="section-title">Transferir dinero</h2>
+  <!-- Modal Transferencia -->
+  <div id="transfer-modal" class="modal" hidden aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-content card" role="dialog" aria-labelledby="transfer-title" aria-modal="true">
+      <h2 id="transfer-title">Transferir dinero</h2>
+      <p class="subtitle">Envía fondos a otra cuenta</p>
 
-        <div class="panel-card transfer-panel">
-          <form id="transfer-form">
-            <div class="input-group">
-              <label for="destination">Cuenta destino</label>
-              <div class="input-wrapper">
-                <i class="fa-solid fa-user-group input-icon"></i>
-                <select id="destination" name="destination" required>
-                  <option value="">Seleccione una cuenta</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="input-group">
-              <label for="amount">Monto</label>
-              <div class="input-wrapper">
-                <i class="fa-solid fa-coins input-icon"></i>
-                <input type="number" id="amount" name="amount" min="0.01" step="0.01" placeholder="0.00" required>
-              </div>
-            </div>
-
-            <p id="transfer-message" class="message hidden"></p>
-
-            <div class="form-actions">
-              <button type="submit" class="btn btn-primary">
-                <span>Confirmar transferencia</span>
-                <i class="fa-solid fa-check"></i>
-              </button>
-              <button type="button" id="btn-back-from-transfer" class="btn btn-outline">
-                <i class="fa-solid fa-arrow-left"></i>
-                <span>Volver al menú</span>
-              </button>
-            </div>
-          </form>
+      <form id="transfer-form" novalidate>
+        <div class="field">
+          <label for="transfer-destination">Cuenta destino</label>
+          <input
+            type="text"
+            id="transfer-destination"
+            name="destination"
+            placeholder="Ej: juan"
+            required
+          >
         </div>
-      </section>
-    </main>
-
-    <footer class="app-footer">
-      <p>Sistema de demostración — los datos se guardan localmente en tu navegador.</p>
-    </footer>
+        <div class="field">
+          <label for="transfer-amount">Monto</label>
+          <input
+            type="number"
+            id="transfer-amount"
+            name="amount"
+            placeholder="0.00"
+            min="0.01"
+            step="0.01"
+            required
+          >
+        </div>
+        <p id="transfer-message" class="message" role="alert" hidden></p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Confirmar transferencia</button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <script src="js/data.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/balance.js"></script>
-  <script src="js/transfer.js"></script>
-  <script src="js/app.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
